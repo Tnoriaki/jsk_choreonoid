@@ -82,6 +82,17 @@ foreach(_3rdparty_dir ${_3rdparty_dirs})
 	add_subdirectory(${_3rdparty_dir})
 endforeach()
 
+# for python wrapper
+## python package
+find_package(PythonLibs 2.7 REQUIRED)
+include_directories(${PYTHON_INCLUDE_PATH})
+## boost package
+find_package(Boost 1.47.0 REQUIRED)
+include_directories(${Boost_INCLUDE_DIRS})
+link_directories(${Boost_LIBRARY_DIRS})
+## include util function
+include(${PROJECT_SOURCE_DIR}/cmake/util.cmake)
+
 message("Build plugins")
 # file(GLOB plugins RELATIVE  ${PROJECT_SOURCE_DIR}/plugins "${PROJECT_SOURCE_DIR}/plugins/*Plugin")
 file(GLOB _plugin_dirs "${PROJECT_SOURCE_DIR}/plugins/*Plugin")

@@ -1,5 +1,5 @@
 # -*-coding:utf-8-*-
-import cnoid
+from cnoid import Base, Body, BodyPlugin
 import numpy as np
 
 # define function
@@ -19,17 +19,15 @@ def angleVector(self,angles=None):
     return np.array([joint.q for joint in self.jointList()])
 ## cnoid.BodyPlugin.BodyItem (robotItem)
 def drawBodyItem(self):
-    robot=self.body()
-    robot.calcForwardKinematics()
-    cnoid.Base.ItemTreeView.instance().checkItem(self,False)
-    cnoid.Base.ItemTreeView.instance().checkItem(self,True)
+    self.calcForwardKinematics()
+    self.notifyKinematicStateChange()
     return True
 
 # add method
 ## cnoid.Body.Body (robot)
-cnoid.Body.Body.links=links
-cnoid.Body.Body.jointList=jointList
-cnoid.Body.Body.angleVector=angleVector
+Body.Body.links=links
+Body.Body.jointList=jointList
+Body.Body.angleVector=angleVector
 
 ## cnoid.BodyPlugin.BodyItem (robotItem)
-cnoid.BodyPlugin.BodyItem.draw=drawBodyItem
+BodyPlugin.BodyItem.draw=drawBodyItem
