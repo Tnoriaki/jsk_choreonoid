@@ -21,3 +21,14 @@ def load_model(model_path, use_choreonoid=True):
         loader = Body.BodyLoader()
         robot = loader.load(str(model_path))
         return robot
+
+class IKParam(object):
+
+    def __init__(self, robot, ee_name):
+        self.name = ee_name
+        self.link = robot.link(ee_name)
+        self.manip = Body.getCustomJointPath(robot,
+                                             robot.rootLink(),
+                                             self.link)
+        self.p = self.link.p
+        self.R = self.link.R
